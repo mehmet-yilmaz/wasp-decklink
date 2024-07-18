@@ -4,6 +4,8 @@
 #include <oatpp/web/server/AsyncHttpConnectionHandler.hpp>
 #include <oatpp/web/server/HttpRouter.hpp>
 #include <oatpp/network/tcp/server/ConnectionProvider.hpp>
+#include <oatpp/network/tcp/client/ConnectionProvider.hpp>
+#include <oatpp/network/ConnectionProvider.hpp>
 #include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 #include <oatpp/core/macro/component.hpp>
 
@@ -47,11 +49,15 @@ namespace Wasp
          *  Create ConnectionHandler component which uses Router component to route requests
          */
         OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::network::ConnectionHandler>, serverConnectionHandler)
-        ([]
+        ("http", []
          {
             OATPP_COMPONENT(std::shared_ptr<oatpp::web::server::HttpRouter>, router); // get Router component
             OATPP_COMPONENT(std::shared_ptr<oatpp::async::Executor>, executor); // get Async executor component
             return oatpp::web::server::AsyncHttpConnectionHandler::createShared(router, executor); }());
+
+        OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::network::tcp::client::ConnectionProvider>, clientConnectionProvider)
+        ([]
+         { return oatpp::network::tcp::client::ConnectionProvider::createShared({"localhost", 8000, oatpp::network::Address::IP_4}); }());
 
         /**
          *  Create ObjectMapper component to serialize/deserialize DTOs in Contoller's API
@@ -76,7 +82,10 @@ namespace Wasp
         auto connectionHandler = oatpp::websocket::AsyncConnectionHandler::createShared(executor);
         connectionHandler->setSocketInstanceListener(std::make_shared<WSServerNamespace>());
         return connectionHandler; }());
-    };
+
+    private:
+        // const std::shared_ptr<oatpp::network::Address> *address = std::make_shared<oatpp::network::Address>("0.0.0.0", 8000, oatpp::network::Address::IP_4);
+    }; // Class WebServerComponent
 } // namespace Wasp
 
 #endif // !___WASP_OATPP_WEB_SERVER_COMPONENT_HPP___

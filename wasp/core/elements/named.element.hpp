@@ -13,17 +13,17 @@ namespace Wasp
     public:
         virtual const Wasp::Types::TName name()
         {
-            return this->name_;
+            return this->m_name;
         };
         virtual const Wasp::Types::TName name(const Wasp::Types::TName caller)
         {
-            std::cout << "Named Element " << this->name_ << "'s name has been called by: " << caller << std::endl;
-            return this->name_;
+            std::cout << "Named Element " << this->m_name << "'s name has been called by: " << caller << std::endl;
+            return this->m_name;
         };
 
     protected:
-        NamedElement(const Wasp::Types::TName name) : name_(name != "" ? name : Wasp::Generators::NameGenerator::generate()){};
-        const Wasp::Types::TName name_;
+        NamedElement(const Wasp::Types::TName name) : m_name(name != "" ? name : Wasp::Generators::NameGenerator::generate()){};
+        const Wasp::Types::TName m_name;
     };
 };
 

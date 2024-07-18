@@ -10,7 +10,7 @@ namespace Wasp
     public:
         virtual void init() override {};
         virtual void run() override {};
-        WSServerService(const Wasp::Types::TName &name_) : Service(name_){};
+        WSServerService(const Wasp::Types::TName &name) : Service(name){};
 
     private:
     };

@@ -14,7 +14,8 @@ namespace Wasp
         public:
             static void STATIC_LOG(const char *message)
             {
-                std::cout << "[LOG-STATIC] - [" << Wasp::Generators::Timestamp::generate() << "] - " << message << std::endl;
+                // std::cout << "[LOG-STATIC] - [" << Wasp::Generators::Timestamp::generate() << "] - " << message << std::endl;
+                printf("[LOG-STATIC]\t[%s] - %s\n", Wasp::Generators::Timestamp::generate(), message);
             };
             virtual void log(const char *message, const int level = 3) override
             {
@@ -51,12 +52,14 @@ namespace Wasp
             void console_log(const char *type, const char *message, const int &level)
             {
                 if (m_level >= level)
-                    std::cout << "[" << type << "] [" << Wasp::Generators::Timestamp::generate() << "] [" << this->m_parent << "] [" << level << "] - " << message << std::endl;
+                    // std::cout << "[" << type << "] [" << Wasp::Generators::Timestamp::generate() << "] [" << this->m_parent << "] [" << level << "] - " << message << std::endl;
+                    printf("[%s]\t\t[%s][%s][%i] - %s\n", type, Wasp::Generators::Timestamp::generate(), this->m_parent.c_str(), level, message);
             };
             void console_log(const char *type, const std::string &message, const int &level)
             {
                 if (m_level >= level)
-                    std::cout << "[" << type << "] [" << Wasp::Generators::Timestamp::generate() << "] [" << this->m_parent << "] [" << level << "] - " << message << std::endl;
+                    // std::cout << "[" << type << "] [" << Wasp::Generators::Timestamp::generate() << "] [" << this->m_parent << "] [" << level << "] - " << message << std::endl;
+                    printf("[%s]\t\t[%s][%s][%i] - %s\n", type, Wasp::Generators::Timestamp::generate(), this->m_parent.c_str(), level, message.c_str());
             };
         };
     };

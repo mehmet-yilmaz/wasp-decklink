@@ -15,11 +15,11 @@ namespace Wasp
         virtual ~WebClientRunner() override{};
         virtual void init() override
         {
-            this->initialized = true;
+            this->m_initialized = true;
         };
         virtual void run() override
         {
-            this->running = true;
+            this->m_running = true;
         };
     };
 };

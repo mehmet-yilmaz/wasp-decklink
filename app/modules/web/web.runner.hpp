@@ -14,21 +14,30 @@ namespace Wasp
     public:
         ~WebRunner()
         {
+            Wasp::Logger::ConsoleLogger::STATIC_LOG(("Total Number of Web Components: " + std::to_string(oatpp::base::Environment::getObjectsCount())).c_str());
+            Wasp::Logger::ConsoleLogger::STATIC_LOG(("Total number of created Web Objects: " + std::to_string(oatpp::base::Environment::getObjectsCreated())).c_str());
             oatpp::base::Environment::destroy();
         };
         virtual void init() override
         {
-            this->initialized = true;
+            this->m_initialized = true;
         };
         virtual void run() override
         {
-            this->running = true;
+            this->m_running = true;
+            // this->reset();
         };
-        WebRunner(const Wasp::Types::TName &name_) : Runner(name_)
+        virtual void reset() override
         {
-            this->initialized = false;
-            this->running = false;
+            this->m_running = false;
+            this->m_initialized = false;
+        };
+        WebRunner(const Wasp::Types::TName &name) : Runner(name)
+        {
+            this->m_initialized = false;
+            this->m_running = false;
             oatpp::base::Environment::init();
+            Wasp::Logger::ConsoleLogger::STATIC_LOG("OATPP Initialized!");
         };
     };
 };

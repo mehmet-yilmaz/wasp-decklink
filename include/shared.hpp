@@ -28,12 +28,3 @@
 #define LOG_LEVEL 5
 
 #endif // !_SHARED_HPP_
-
-// #ifndef _SHARED_HPP_
-// #define _SHARED_HPP_
-
-// #include <common.hpp>
-// #include <utils.hpp>
-// #include <logger.hpp>
-
-// #endif // !_SHARED_HPP_

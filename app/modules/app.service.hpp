@@ -14,11 +14,11 @@ namespace Wasp
         virtual void init() override
         {
             // std::cout << "App Service Initialized!" << std::endl;
-            this->initialized = true;
+            this->m_initialized = true;
         };
         virtual void run() override
         {
-            this->running = true;
+            this->m_running = true;
             // std::cout << "App Service Running...." << std::endl;
         };
         virtual ~AppService() override{};

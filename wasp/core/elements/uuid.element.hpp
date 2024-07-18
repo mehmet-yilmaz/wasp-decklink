@@ -10,11 +10,11 @@ namespace Wasp
     public:
         const std::string uuid()
         {
-            return this->uuid_;
+            return this->m_uuid;
         };
 
     private:
-        const std::string uuid_{Generators::Uuid::generate()};
+        const std::string m_uuid{Generators::Uuid::generate()};
     };
 };
 

@@ -6,6 +6,7 @@
 #include <web/server/websocket/websocket-server.application.hpp>
 #include <utils/logger/console.logger.hpp>
 #include <utils/generator/name.generator.hpp>
+#include <web/server/websocket/websocket-server.connection.hpp>
 
 namespace Wasp
 {

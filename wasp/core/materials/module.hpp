@@ -27,23 +27,23 @@ namespace Wasp
             this->init_map(this->imports);
             this->init_map(this->runners);
 
-            this->initialized = true;
+            this->m_initialized = true;
         };
         virtual void run() override
         {
             this->logger->debug((this->name() + " running..."), 5);
-            this->running = true;
+            this->m_running = true;
             this->run_map(this->runners);
             this->run_map(this->imports);
             this->join_threads();
         };
-        std::atomic_bool &isInitialized()
+        std::atomic_bool &initialized()
         {
-            return this->initialized;
+            return this->m_initialized;
         };
-        std::atomic_bool &isRunning()
+        std::atomic_bool &running()
         {
-            return this->running;
+            return this->m_running;
         };
         std::unique_ptr<Logger::ConsoleLogger> logger;
         Module(
@@ -60,8 +60,8 @@ namespace Wasp
 
     protected:
         std::map<const std::string, std::thread> threads{};
-        std::atomic_bool initialized{false};
-        std::atomic_bool running{false};
+        std::atomic_bool m_initialized{false};
+        std::atomic_bool m_running{false};
         const std::map<const std::string, std::shared_ptr<Module>> &imports;
         const std::map<const std::string, std::shared_ptr<Runner>> &runners;
 
@@ -72,7 +72,7 @@ namespace Wasp
             for (auto const &initable : initables)
             {
                 this->logger->debug(initable.first + " Initializing...", 5);
-                if (!initable.second->isInitialized())
+                if (!initable.second->initialized())
                 {
                     initable.second->init();
                     this->logger->log(initable.first + " initialized!", 5);
@@ -85,7 +85,7 @@ namespace Wasp
         {
             for (auto const &runnable : runnables)
             {
-                if (!runnable.second->isRunning())
+                if (!runnable.second->running())
                 {
                     this->threads[runnable.first] = std::thread(&I_Runnable::run, runnable.second);
                     this->logger->log(runnable.first + " runner has been threaded!", 5);

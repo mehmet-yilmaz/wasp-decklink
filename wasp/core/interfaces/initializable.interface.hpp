@@ -8,7 +8,7 @@ namespace Wasp
     struct I_Initializable
     {
         virtual void init() = 0;
-        virtual std::atomic_bool &isInitialized() = 0;
+        virtual std::atomic_bool &initialized() = 0;
     };
 };
 

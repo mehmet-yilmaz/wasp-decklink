@@ -20,13 +20,14 @@ namespace Wasp
         virtual ~Runner() = default;
         virtual void init() = 0;
         virtual void run() = 0;
-        std::atomic_bool &isInitialized()
+        virtual void reset() = 0;
+        std::atomic_bool &initialized()
         {
-            return this->initialized;
+            return this->m_initialized;
         };
-        std::atomic_bool &isRunning()
+        std::atomic_bool &running()
         {
-            return this->running;
+            return this->m_running;
         };
 
     protected:
@@ -34,8 +35,8 @@ namespace Wasp
         {
             Wasp::Logger::ConsoleLogger::STATIC_LOG((this->name() + " Constructed!").c_str());
         };
-        std::atomic_bool running{false};
-        std::atomic_bool initialized{false};
+        std::atomic_bool m_running{false};
+        std::atomic_bool m_initialized{false};
     };
 
 };

@@ -12,20 +12,27 @@ namespace Wasp
     public:
         virtual void init() override
         {
-            this->initialized = true;
+            this->m_initialized = true;
         };
         virtual void run() override
         {
-            this->running = true;
+            this->m_running = true;
             char command;
-            while (this->running)
+            while (this->m_running)
             {
                 // this->clear();
                 this->printMenu();
                 std::cout << "Please Enter Your Command: ";
                 std::cin >> command;
-                this->running = this->cliService->readCommand(command);
+                this->m_running = this->cliService->readCommand(command);
             };
+            this->reset();
+        };
+
+        virtual void reset() override
+        {
+            this->m_running = false;
+            this->m_initialized = false;
         };
         CliRunner(const Wasp::Types::TName &name_, const std::shared_ptr<CliService> &cliService_) : Runner(name_), cliService(cliService_){};
         ~CliRunner(){};

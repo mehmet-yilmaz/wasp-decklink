@@ -11,6 +11,7 @@ namespace Wasp
     namespace Bootstrap
     {
         const auto webRunner = std::make_shared<Wasp::WebRunner>("Web Runner");
+
         const std::map<const std::string, std::shared_ptr<Wasp::Runner>> webRunners{
             std::make_pair<const std::string, const std::shared_ptr<Wasp::Runner> &>(webRunner->uuid(), webRunner)};
         const std::map<const std::string, std::shared_ptr<Wasp::Module>> webImports{

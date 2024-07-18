@@ -8,7 +8,7 @@ namespace Wasp
     struct I_Runnable
     {
         virtual void run() = 0;
-        virtual std::atomic_bool &isRunning() = 0;
+        virtual std::atomic_bool &running() = 0;
     };
 };
 
