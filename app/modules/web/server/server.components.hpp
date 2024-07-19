@@ -68,7 +68,6 @@ namespace Wasp
             return objectMapper; }());
 
     private:
-        // const std::shared_ptr<oatpp::network::Address> *address = std::make_shared<oatpp::network::Address>("0.0.0.0", 8000, oatpp::network::Address::IP_4);
     }; // Class WebServerComponent
 } // namespace Wasp
 
