@@ -6,6 +6,7 @@
 #include <oatpp/network/Server.hpp>
 #include <web/server/server.components.hpp>
 #include <web/server/server.controller.hpp>
+#include <web/server/websocket/websocket-server.components.hpp>
 #include <cli/cli.subjects.hpp>
 
 namespace Wasp
@@ -14,6 +15,7 @@ namespace Wasp
     {
     private:
         std::unique_ptr<WebServerComponent> components;
+        std::unique_ptr<WSServerComponents> wsComponents;
         // = std::make_shared<WebServerComponent>();
         std::shared_ptr<oatpp::network::Server> server;
         std::atomic_bool run_server{true};
@@ -32,7 +34,7 @@ namespace Wasp
         virtual void init() override
         {
             this->components = std::make_unique<WebServerComponent>();
-
+            this->wsComponents = std::make_unique<WSServerComponents>();
             /* Get router component */
             OATPP_COMPONENT(std::shared_ptr<oatpp::web::server::HttpRouter>, router);
             /* Create MyController and add all of its endpoints to router */
@@ -82,6 +84,7 @@ namespace Wasp
             executor->join(); // joint executor threads.
 
             this->components.reset(); // Clear all components to prevent leakage
+            this->wsComponents.reset();
 
             this->m_initialized = false;
         };

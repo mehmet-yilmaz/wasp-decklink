@@ -9,10 +9,6 @@
 #include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 #include <oatpp/core/macro/component.hpp>
 
-#include <oatpp/oatpp-websocket/AsyncWebSocket.hpp>
-#include <oatpp/oatpp-websocket/AsyncConnectionHandler.hpp>
-#include <web/server/websocket/websocket-server.namespace.hpp>
-
 namespace Wasp
 {
     class WebServerComponent
@@ -70,18 +66,6 @@ namespace Wasp
             deserializerConfig->allowUnknownFields = false;
             auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared(serializerConfig, deserializerConfig);
             return objectMapper; }());
-
-        /**
-         *  Create websocket connection handler
-         */
-
-        OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::network::ConnectionHandler>, websocketConnectionHandler)
-        ("websocket", []
-         {
-        OATPP_COMPONENT(std::shared_ptr<oatpp::async::Executor>, executor);
-        auto connectionHandler = oatpp::websocket::AsyncConnectionHandler::createShared(executor);
-        connectionHandler->setSocketInstanceListener(std::make_shared<WSServerNamespace>());
-        return connectionHandler; }());
 
     private:
         // const std::shared_ptr<oatpp::network::Address> *address = std::make_shared<oatpp::network::Address>("0.0.0.0", 8000, oatpp::network::Address::IP_4);
