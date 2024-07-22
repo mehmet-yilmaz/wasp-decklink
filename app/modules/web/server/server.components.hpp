@@ -6,8 +6,8 @@
 #include <oatpp/network/tcp/server/ConnectionProvider.hpp>
 #include <oatpp/network/tcp/client/ConnectionProvider.hpp>
 #include <oatpp/network/ConnectionProvider.hpp>
-#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 #include <oatpp/core/macro/component.hpp>
+#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 
 namespace Wasp
 {
@@ -54,18 +54,6 @@ namespace Wasp
         OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::network::tcp::client::ConnectionProvider>, clientConnectionProvider)
         ([]
          { return oatpp::network::tcp::client::ConnectionProvider::createShared({"localhost", 8000, oatpp::network::Address::IP_4}); }());
-
-        /**
-         *  Create ObjectMapper component to serialize/deserialize DTOs in Contoller's API
-         */
-        OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, apiObjectMapper)
-        ([]
-         {
-            auto serializerConfig = oatpp::parser::json::mapping::Serializer::Config::createShared();
-            auto deserializerConfig = oatpp::parser::json::mapping::Deserializer::Config::createShared();
-            deserializerConfig->allowUnknownFields = false;
-            auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared(serializerConfig, deserializerConfig);
-            return objectMapper; }());
 
     private:
     }; // Class WebServerComponent

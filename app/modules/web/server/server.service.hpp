@@ -10,7 +10,7 @@ namespace Wasp
     class WebServerService : public Service
     {
     public:
-        WebServerService(const Wasp::Types::TName &name_) : Service(name_){};
+        WebServerService(const Wasp::Types::TName &name) : Service(name){};
         virtual ~WebServerService() override{};
         virtual void init() override {};
         virtual void run() override {};
@@ -24,7 +24,7 @@ namespace Wasp
 
     namespace Bootstrap
     {
-        const auto webServerService = std::make_shared<Wasp::WebServerService>("Web Server Service");
+        const auto webServerService = std::make_shared<Wasp::WebServerService>("WebServerService");
     };
 
 };
