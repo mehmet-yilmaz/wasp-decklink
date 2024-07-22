@@ -6,12 +6,8 @@
 #include <oatpp/network/tcp/server/ConnectionProvider.hpp>
 #include <oatpp/network/tcp/client/ConnectionProvider.hpp>
 #include <oatpp/network/ConnectionProvider.hpp>
-#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 #include <oatpp/core/macro/component.hpp>
-
-#include <oatpp/oatpp-websocket/AsyncWebSocket.hpp>
-#include <oatpp/oatpp-websocket/AsyncConnectionHandler.hpp>
-#include <web/server/websocket/websocket-server.namespace.hpp>
+#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 
 namespace Wasp
 {
@@ -59,32 +55,7 @@ namespace Wasp
         ([]
          { return oatpp::network::tcp::client::ConnectionProvider::createShared({"localhost", 8000, oatpp::network::Address::IP_4}); }());
 
-        /**
-         *  Create ObjectMapper component to serialize/deserialize DTOs in Contoller's API
-         */
-        OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, apiObjectMapper)
-        ([]
-         {
-            auto serializerConfig = oatpp::parser::json::mapping::Serializer::Config::createShared();
-            auto deserializerConfig = oatpp::parser::json::mapping::Deserializer::Config::createShared();
-            deserializerConfig->allowUnknownFields = false;
-            auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared(serializerConfig, deserializerConfig);
-            return objectMapper; }());
-
-        /**
-         *  Create websocket connection handler
-         */
-
-        OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::network::ConnectionHandler>, websocketConnectionHandler)
-        ("websocket", []
-         {
-        OATPP_COMPONENT(std::shared_ptr<oatpp::async::Executor>, executor);
-        auto connectionHandler = oatpp::websocket::AsyncConnectionHandler::createShared(executor);
-        connectionHandler->setSocketInstanceListener(std::make_shared<WSServerNamespace>());
-        return connectionHandler; }());
-
     private:
-        // const std::shared_ptr<oatpp::network::Address> *address = std::make_shared<oatpp::network::Address>("0.0.0.0", 8000, oatpp::network::Address::IP_4);
     }; // Class WebServerComponent
 } // namespace Wasp
 

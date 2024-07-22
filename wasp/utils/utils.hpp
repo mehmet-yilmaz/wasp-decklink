@@ -39,6 +39,12 @@ namespace Wasp
             const char *uuid = id.c_str();
             return uuid;
         };
+
+        bool isExist(const std::string &path)
+        {
+            struct stat buffer;
+            return (stat(name.c_str(), &buffer) == 0);
+        }
     }
 }
 

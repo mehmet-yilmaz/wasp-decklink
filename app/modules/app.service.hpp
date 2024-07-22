@@ -30,7 +30,7 @@ namespace Wasp
     // AppService Global Initialization!
     namespace Bootstrap
     {
-        const auto appService = std::make_shared<Wasp::AppService>("APP Service");
+        const auto appService = std::make_shared<Wasp::AppService>("APPService");
     };
 
 };

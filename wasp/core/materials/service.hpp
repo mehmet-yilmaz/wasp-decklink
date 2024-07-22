@@ -29,7 +29,7 @@ namespace Wasp
     protected:
         Service(const Wasp::Types::TName &name) : Provider(name)
         {
-            Wasp::Logger::ConsoleLogger::STATIC_LOG((this->name() + " Contructed!").c_str());
+            Wasp::Logger::ConsoleLogger::STATIC_LOG((this->name() + " Constructed!").c_str());
         };
         std::atomic_bool m_initialized{false};
         std::atomic_bool m_running{false};

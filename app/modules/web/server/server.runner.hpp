@@ -6,6 +6,11 @@
 #include <oatpp/network/Server.hpp>
 #include <web/server/server.components.hpp>
 #include <web/server/server.controller.hpp>
+#include <web/server/websocket/websocket.controller.hpp>
+#include <web/server/websocket/websocket.components.hpp>
+#include <web/server/api/api.component.hpp>
+#include <web/server/api/api.controller.hpp>
+#include <web/server/static/static.controller.hpp>
 #include <cli/cli.subjects.hpp>
 
 namespace Wasp
@@ -13,11 +18,11 @@ namespace Wasp
     class WebServerRunner : public Runner
     {
     private:
-        std::unique_ptr<WebServerComponent> components;
-        // = std::make_shared<WebServerComponent>();
+        std::unique_ptr<WebServerComponent> serverComponents;
+        std::unique_ptr<ApiComponent> apiComponents;
+        std::unique_ptr<WSComponents> wsComponents;
         std::shared_ptr<oatpp::network::Server> server;
         std::atomic_bool run_server{true};
-        // oatpp::network::Server *server;
         std::function<bool()> isRun = [&]()
         {
             return this->run_server.load();
@@ -31,12 +36,19 @@ namespace Wasp
 
         virtual void init() override
         {
-            this->components = std::make_unique<WebServerComponent>();
+            this->serverComponents = std::make_unique<WebServerComponent>();
+            this->apiComponents = std::make_unique<ApiComponent>();
+            this->wsComponents = std::make_unique<WSComponents>();
 
             /* Get router component */
             OATPP_COMPONENT(std::shared_ptr<oatpp::web::server::HttpRouter>, router);
             /* Create MyController and add all of its endpoints to router */
             router->addController(WebServerController::createShared());
+            router->addController(WebsocketController::createShared());
+            router->addController(WaspApiController::createShared());
+            router->addController(StaticController::createShared());
+
+            router->logRouterMappings();
 
             /* Get connection handler component */
             OATPP_COMPONENT(std::shared_ptr<oatpp::network::ConnectionHandler>, connectionHandler, "http");
@@ -50,7 +62,6 @@ namespace Wasp
                                                          {
                 if(value) {
                     Wasp::Logger::ConsoleLogger::STATIC_LOG("Quitter Has Been Triggered!!");
-                    // this->stopServer();
                     this->run_server = false;
                 } });
 
@@ -60,7 +71,7 @@ namespace Wasp
         {
             this->m_running = true;
 
-            OATPP_LOGD("Server", "Running on port %s...", this->components->serverConnectionProvider.getObject()->getProperty("port").toString()->c_str());
+            OATPP_LOGD("Server", "Running on port %s...", this->serverComponents->serverConnectionProvider.getObject()->getProperty("port").toString()->c_str());
             this->server->run(this->isRun);
             this->reset();
         };
@@ -81,7 +92,9 @@ namespace Wasp
             executor->stop(); // wait all the coroutines;
             executor->join(); // joint executor threads.
 
-            this->components.reset(); // Clear all components to prevent leakage
+            this->wsComponents.reset();
+            this->apiComponents.reset();
+            this->serverComponents.reset(); // Clear all components to prevent leakage
 
             this->m_initialized = false;
         };
