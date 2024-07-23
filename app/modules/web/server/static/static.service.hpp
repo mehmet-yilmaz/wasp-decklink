@@ -13,8 +13,8 @@ namespace Wasp
         const std::string m_basePath;
 
     public:
-        StaticService(const Wasp::Types::TName &name) : Wasp::Service(name), m_basePath("static"){};
-        virtual ~StaticService() override{};
+        StaticService(const Wasp::Types::TName &name) : Wasp::Service(name), m_basePath("public") {};
+        virtual ~StaticService() override {};
 
         virtual void init() override
         {

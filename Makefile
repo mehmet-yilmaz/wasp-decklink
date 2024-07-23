@@ -18,7 +18,7 @@ CXXFLAGS	:= -std=c++14 -Wall -Wreturn-type -Wextra -g
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -pthread -lcrypto -lssl -lrt -loatpp-swagger -loatpp-websocket -loatpp 
+LFLAGS = -pthread -lcrypto -lssl -lrt -loatpp-websocket -loatpp
 
 # define output directory
 OUTPUT	:= output
