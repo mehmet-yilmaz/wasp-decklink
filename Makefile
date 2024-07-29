@@ -4,7 +4,7 @@
 #
 
 # Add any compiled dispatch library entrypoint here!
-DISPATCHES = 
+DISPATCHES = include/BMD_DECKLINKv14.1/DeckLinkAPIDispatch.cpp
 
 # Module directories with whitespace seperation
 MODULE = app/modules
