@@ -6,6 +6,7 @@
 #include <shared.hpp>
 #include <cli/cli.module.hpp>
 #include <web/web.module.hpp>
+#include <system/system.module.hpp>
 
 namespace Wasp
 {
@@ -14,13 +15,14 @@ namespace Wasp
     {
         // Imports
         const std::map<const std::string, std::shared_ptr<Wasp::Module>> appImports{
-            std::make_pair<const std::string, const std::shared_ptr<Wasp::Module> &>(cliModule->uuid(), cliModule),
-            std::make_pair<const std::string, const std::shared_ptr<Wasp::Module> &>(webModule->uuid(), webModule)};
+            std::make_pair<const std::string, const std::shared_ptr<Wasp::Module> &>(cliModule->uuid() + "." + cliModule->name(), cliModule),
+            std::make_pair<const std::string, const std::shared_ptr<Wasp::Module> &>(webModule->uuid() + "." + webModule->name(), webModule),
+            std::make_pair<const std::string, const std::shared_ptr<Wasp::Module> &>(systemModule->uuid() + "." + systemModule->name(), systemModule)};
         // Runners
         const std::map<const std::string, std::shared_ptr<Wasp::Runner>> appRunners{};
 
         const auto App = std::make_shared<Wasp::Module>(
-            "APP Module",
+            "APPModule",
             appImports,
             appRunners,
             LOG_LEVEL);

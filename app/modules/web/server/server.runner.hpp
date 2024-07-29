@@ -10,6 +10,7 @@
 #include <web/server/websocket/websocket.components.hpp>
 #include <web/server/api/api.component.hpp>
 #include <web/server/api/api.controller.hpp>
+#include <system/network/network.controller.hpp>
 #include <web/server/static/static.controller.hpp>
 #include <cli/cli.subjects.hpp>
 
@@ -46,6 +47,7 @@ namespace Wasp
             router->addController(WebServerController::createShared());
             router->addController(WebsocketController::createShared());
             router->addController(WaspApiController::createShared());
+            router->addController(NetworkController::createShared());
             router->addController(StaticController::createShared());
 
             router->logRouterMappings();

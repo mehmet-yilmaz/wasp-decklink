@@ -23,6 +23,12 @@
 #include <unistd.h>
 #include <fstream>
 #include <sys/stat.h>
+#include <net/if.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <ifaddrs.h>
+#include <sys/select.h>
 
 #define LOG_LEVEL 5
 
