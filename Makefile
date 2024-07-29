@@ -13,12 +13,12 @@ MODULE = app/modules
 CXX = g++
 
 # define any compile-time flags with whitespace seperation
-CXXFLAGS	:= -std=c++14 -Wall -Wreturn-type -Wextra -g
+CXXFLAGS	:= -std=c++17 -Wall -Wreturn-type -Wextra -g
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -pthread -lcrypto -lssl -lrt -loatpp-websocket -loatpp
+LFLAGS = -pthread -lcrypto -lssl -lrt -loatpp-websocket -loatpp -ldbus-cxx
 
 # define output directory
 OUTPUT	:= output
@@ -27,10 +27,10 @@ OUTPUT	:= output
 SRC		:= app/src
 
 # define include directories with whitespace seperation
-INCLUDE	:= include include/* app/modules app/modules/* wasp wasp/*
+INCLUDE	:= include include/* app/modules app/modules/* wasp wasp/* /usr/local/include/dbus-cxx-2.0 /usr/local/include/sigc++-3.0 /usr/local/lib/sigc++-3.0/*
 
 # define local lib directories with whitespace seperation
-LIB		:= lib /usr/local/lib /usr/local/lib/oatpp
+LIB		:= lib /usr/local/lib /usr/local/lib/oatpp 
 
 ifeq ($(OS),Windows_NT)
 MAIN	:= main.exe

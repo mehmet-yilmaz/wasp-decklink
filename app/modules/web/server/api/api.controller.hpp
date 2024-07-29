@@ -7,6 +7,7 @@
 #include <web/server/data/hello.dto.hpp>
 #include <web/server/data/message.dto.hpp>
 #include <web/server/api/api.service.hpp>
+#include <cli/cli.service.hpp>
 namespace Wasp
 {
 #include OATPP_CODEGEN_BEGIN(ApiController) //<- Begin Codegen
@@ -41,6 +42,16 @@ namespace Wasp
                 Wasp::Logger::ConsoleLogger::STATIC_LOG(dto->userAgent->c_str());
 
                 return _return(this->controller->createDtoResponse(Status::CODE_200, dto));
+            };
+        };
+
+        ENDPOINT_ASYNC("GET", "/api/v1/server/stop", stopServer)
+        {
+            ENDPOINT_ASYNC_INIT(stopServer)
+            Action act() override
+            {
+                Wasp::Bootstrap::cliService->quit();
+                return _return(this->controller->createResponse(Status::CODE_200, "OK"));
             };
         };
     };

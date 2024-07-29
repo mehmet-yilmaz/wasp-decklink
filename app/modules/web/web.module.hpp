@@ -13,9 +13,9 @@ namespace Wasp
         const auto webRunner = std::make_shared<Wasp::WebRunner>("Web Runner");
 
         const std::map<const std::string, std::shared_ptr<Wasp::Runner>> webRunners{
-            std::make_pair<const std::string, const std::shared_ptr<Wasp::Runner> &>(webRunner->uuid(), webRunner)};
+            std::make_pair<const std::string, const std::shared_ptr<Wasp::Runner> &>(webRunner->uuid() + "." + webRunner->name(), webRunner)};
         const std::map<const std::string, std::shared_ptr<Wasp::Module>> webImports{
-            std::make_pair<const std::string, const std::shared_ptr<Wasp::Module> &>(webServerModule->uuid(), webServerModule)};
+            std::make_pair<const std::string, const std::shared_ptr<Wasp::Module> &>(webServerModule->uuid() + "." + webServerModule->name(), webServerModule)};
 
         const auto webModule = std::make_shared<Wasp::Module>(
             "WEB Module",

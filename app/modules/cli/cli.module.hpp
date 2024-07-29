@@ -16,7 +16,7 @@ namespace Wasp
         const auto cliRunner = std::make_shared<Wasp::CliRunner>("CLI Runner", cliService);
         const std::map<const std::string, std::shared_ptr<Wasp::Module>> cliImports{};
         const std::map<const std::string, std::shared_ptr<Wasp::Runner>> cliRunners{
-            std::make_pair<const std::string, const std::shared_ptr<Wasp::Runner> &>(cliRunner->uuid(), cliRunner)};
+            std::make_pair<const std::string, const std::shared_ptr<Wasp::Runner> &>(cliRunner->uuid() + "." + cliRunner->name(), cliRunner)};
         const auto cliModule = std::make_shared<Wasp::Module>(
             "CLI Module",
             cliImports,

@@ -12,19 +12,21 @@ namespace Wasp
     public:
         virtual void init() override
         {
+            this->cliService->isModuleOn = true;
             this->m_initialized = true;
         };
         virtual void run() override
         {
             this->m_running = true;
             char command;
-            while (this->m_running)
+            while (this->cliService->isModuleOn)
             {
                 // this->clear();
-                this->printMenu();
-                std::cout << "Please Enter Your Command: ";
-                std::cin >> command;
-                this->m_running = this->cliService->readCommand(command);
+                // this->printMenu();
+                // std::cout << "Please Enter Your Command: ";
+                // std::cin >> command;
+                // this->cliService->readCommand(command);
+                this->cliService->acceptCommand();
             };
             this->reset();
         };
@@ -34,22 +36,11 @@ namespace Wasp
             this->m_running = false;
             this->m_initialized = false;
         };
-        CliRunner(const Wasp::Types::TName &name_, const std::shared_ptr<CliService> &cliService_) : Runner(name_), cliService(cliService_){};
-        ~CliRunner(){};
+        CliRunner(const Wasp::Types::TName &name_, const std::shared_ptr<CliService> &cliService_) : Runner(name_), cliService(cliService_) {};
+        ~CliRunner() {};
 
     private:
         const std::shared_ptr<CliService> &cliService;
-        void clear()
-        {
-            system("clear");
-        };
-        void printMenu()
-        {
-            std::cout << "--- CMD ----------- PROCCESS -----------" << std::endl;
-            std::cout << "     A  -     ADD " << std::endl;
-            std::cout << "     B  -     BRING" << std::endl;
-            std::cout << "     Q  -     QUIT" << std::endl;
-        };
     };
 };
 
