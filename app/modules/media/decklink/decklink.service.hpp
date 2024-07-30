@@ -2,7 +2,7 @@
 #define ___WASP_MEDIA_DECKLINK_SERVICE_HPP___
 
 #include <core/materials/service.hpp>
-#include <media/decklink/declink-card.class.hpp>
+#include <media/decklink/classes/declink-card.class.hpp>
 #include <DeckLinkAPI.h>
 
 namespace Wasp

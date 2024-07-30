@@ -20,6 +20,12 @@ namespace Wasp
 
                 if (this->m_decklink->QueryInterface(IID_IDeckLinkConfiguration, (void **)&this->m_configuration) == S_OK)
                     Wasp::Logger::ConsoleLogger::STATIC_LOG(std::string("Decklink Configuration Successfully Created for Card: " + std::to_string(this->m_cardno)).c_str());
+                if (this->m_decklink->QueryInterface(IID_IDeckLinkProfileManager, (void **)&this->m_profile_manager) == S_OK)
+                    Wasp::Logger::ConsoleLogger::STATIC_LOG(std::string("Decklink Profile Manager Successfully Created for Card: " + std::to_string(this->m_cardno)).c_str());
+                if (this->m_decklink->QueryInterface(IID_IDeckLinkOutput, (void **)&this->m_output) == S_OK)
+                    Wasp::Logger::ConsoleLogger::STATIC_LOG(std::string("Decklink Output Successfully Created for Card: " + std::to_string(this->m_cardno)).c_str());
+                if (this->m_decklink->QueryInterface(IID_IDeckLinkInput, (void **)&this->m_input) == S_OK)
+                    Wasp::Logger::ConsoleLogger::STATIC_LOG(std::string("Decklink Input Successfully Created for Card: " + std::to_string(this->m_cardno)).c_str());
             };
             ~Card()
             {
@@ -44,9 +50,13 @@ namespace Wasp
             IDeckLink *m_decklink{nullptr};
             IDeckLinkConfiguration *m_configuration{nullptr};
             IDeckLinkProfile *m_profile{nullptr};
+            IDeckLinkProfileManager *m_profile_manager{nullptr};
+            IDeckLinkOutput *m_output{nullptr};
+            IDeckLinkInput *m_input{nullptr};
             const char *m_modelname{NULL};
             const char *m_displayname{NULL};
             const int m_cardno{NULL};
+            const char *m_configuration_name{nullptr};
 
         protected:
         };
