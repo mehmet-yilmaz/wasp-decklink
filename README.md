@@ -1,6 +1,6 @@
 # Wasp Decklink
 
-This is a Blackmagic Decklink Card interfaced media application based on the [Wasp Code](https://github.com/mehmet-yilmaz/wasp) C++ framework.
+This is a Blackmagic Decklink Card interfaced media application based on the [Wasp Code ](https://github.com/mehmet-yilmaz/WaspCode)C++ framework.
 
 Wasp is an Angular / Nest.JS like C++ framework for creating structured, well organized, SOLID principles stable C++ apps.
 Wasp equipped with OATPP which is light weight open source C++ Web Server project.
